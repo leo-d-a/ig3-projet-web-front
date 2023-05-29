@@ -2,8 +2,8 @@ import { createApp } from "vue";
 import { createRouter, createWebHistory } from 'vue-router'
 import "./normalize.css";
 import App from "./App.vue";
-import Login from "./views/Logs/Login.vue";
-import Signup from "./views/Logs/Signup.vue";
+import Login from "./views/Auth/Login.vue";
+import Signup from "./views/Auth/Signup.vue";
 import Home from "./views/Home.vue";
 // import AdminPanel from "./views/Panels/AdminPanel.vue";
 // import UserPanel from "./views/Panels/UserPanel.vue";
