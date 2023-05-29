@@ -11,8 +11,8 @@ import './index.css'; // assuming this is where you have your tailwind imports
 
 const routes = [
   { path: "/", component: Home },
-  // { path: "/login", component: Login },
-  // { path: "/signup", component: Signup },
+  { path: "/login", component: Login },
+  { path: "/signup", component: Signup },
   // { path: "/admin", component: AdminPanel },
   // { path: "/user", component: UserPanel },
 ];
