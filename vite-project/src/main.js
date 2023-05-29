@@ -7,7 +7,7 @@ import Signup from "./views/Logs/Signup.vue";
 import Home from "./views/Home.vue";
 // import AdminPanel from "./views/Panels/AdminPanel.vue";
 // import UserPanel from "./views/Panels/UserPanel.vue";
-import './index.css'; // assuming this is where you have your tailwind imports
+import './index.css'; 
 
 const routes = [
   { path: "/", component: Home },
