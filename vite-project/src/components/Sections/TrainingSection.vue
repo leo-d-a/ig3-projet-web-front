@@ -74,7 +74,7 @@ export default {
 
 .card {
   display: flex;
-  width: 34vw;
+  width: 38vw;
   justify-content: center;
   flex-wrap: wrap;
 }
