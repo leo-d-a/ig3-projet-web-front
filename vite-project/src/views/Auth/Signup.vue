@@ -1,115 +1,89 @@
-<script>
-import axios from "axios";
+<template>
+    <div class="w-full max-w-lg mx-auto mt-24">
+      <form @submit.prevent="signup" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+        <h1 class="block text-gray-700 text-lg font-bold mb-4 mt-6">S'inscrire !</h1>
+        <div class="mb-4">
+          <label class="block text-gray-700 text-sm font-bold mb-2 mt-2" for="nom">
+            Nom
+          </label>
+          <input v-model="nom" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="nom" type="text" required>
+        </div> 
+        <div class="mb-4">
+          <label class="block text-gray-700 text-sm font-bold mb-2" for="prenom">
+            Prénom
+          </label>
+          <input v-model="prenom" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="prenom" type="text" required>
+        </div>
+        <div class="mb-4">
+          <label class="block text-gray-700 text-sm font-bold mb-2" for="email">
+            Email
+          </label>
+          <input v-model="email" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="email" type="email" required>
+        </div>
+        <div class="mb-4">
+          <label class="block text-gray-700 text-sm font-bold mb-2" for="password">
+            Mot de Passe
+          </label>
+          <input v-model="password" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="password" type="password" required>
+        </div>
+        <div class="mb-6">
+          <label class="block text-gray-700 text-sm font-bold mb-2" for="confirmPassword">
+            Confirmer Mot de Passe
+          </label>
+          <input v-model="confirmPassword" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="confirmPassword" type="password" required>
+        </div>
+        <div class="flex items-center justify-between">
+          <button class="bg-accent hover:bg-secondary text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
+            Devenir Eleve
+          </button>
+          <button class="bg-accent hover:bg-secondary text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
+            Devenir Patient
+          </button>
+          <p v-if="requestError" class="text-red-500 text-xs italic">{{requestError}}</p>
+        </div>
+      </form>
+    </div>
+  </template>
 
-export default{
-    name: "Signup",
-    data() {
-        return{
-        requestError: "",
-        nom: "",
-        prenom: "",
-        email: "",
-        password: "",
-        confirmPassword: "",
-        emailRules: [
-            (v) => !!v || "Un email est requis",
-            (v) => /.+@.+\..+/.test(v) || "l'émail doit être vali",
-        ],
-        nomRules: [
-            (v) => !!v || "Un nom est requis",  
-        ],
-        prenomRules: [
-            (v) => !!v || "Un prénom est requis",  
-        ],
-        passwordRules: [
-            (v) => !!v || "Un mot de passe est requis",
-            (v) => v.length >= 2 || "Le mot de passe doit contenir au moins 2 caractères",
-        ],
-        confirmPasswordRules: [
-            (v) => !!v || "La confirmation du mot de passe est requise",
-            (v) => v === this.password || "Les mots de passe ne correspondent pas",
-        ],
-        };
-    },
-    methods: {
-        async signup() {
-            const { valid } = await this.$refs.form.validate();
-            if (!valid) {
-                return;
-            }
-            try {
-                const response = await axios.post("http://localhost:3002/auth/signup", {
-                    "mail_address": this.email,
-                    "username": this.username,
-                    "password": this.password,
-                });
-                console.log(response);
-                this.$router.push("/login");
-            } catch (error) {
-                console.log(error);
-                this.requestError = error.response.data.message;
-            }
-        }
+<script>
+export default {
+  data() {
+    return {
+      nom: '',
+      prenom: '',
+      email: '',
+      password: '',
+      confirmPassword: '',
+      requestError: ''
     }
+  },
+  methods: {
+    async signup() {
+      // Form validation
+      if (this.password !== this.confirmPassword) {
+        this.requestError = 'Les mots de passe ne correspondent pas.';
+        return;
+      }
+
+      try {
+        const response = await axios.post('/api/signup', {
+          nom: this.nom,
+          prenom: this.prenom,
+          email: this.email,
+          password: this.password
+        });
+
+        if (response.data.success) {
+        } else {
+          this.requestError = 'Une erreur est survenue lors de l\'inscription.';
+        }
+      } catch (error) {
+        this.requestError = 'Une erreur est survenue lors de l\'inscription.';
+      }
+    }
+  }
 }
 </script>
 
-<template>
-    <v-form class="form" id="Users" ref="form">
-        <h1>S'inscrire !</h1>
-        <v-text-field
-            v-model="nom"
-            label="Nom"
-            type="text"
-            required
-            :rules="nomRules"
-        ></v-text-field>
-        <v-text-field
-            v-model="prenom"
-            label="Prénom"
-            type="text"
-            required
-            :rules="prenomRules"
-        ></v-text-field>
-        <v-text-field
-            v-model="email"
-            label="Email"
-            type="email"
-            required
-            :rules="emailRules"
-        ></v-text-field>
-        <v-text-field
-            v-model="password"
-            label="Password"
-            type="password"
-            required
-            :rules="passwordRules"
-        ></v-text-field>
-        <v-text-field
-            v-model="confirmPassword"
-            label="Confirm Password"
-            type="password"
-            required
-            :rules="confirmPasswordRules"
-        ></v-text-field>
-        <v-btn color="primary" type="submit" @click.prevent="signup">S'inscrire</v-btn>
-        <div v-if="requestError" class="error">{{requestError}}</div>
-    </v-form>
-</template>
-
 <style scoped>
-    .form {
-        width: 100%;
-        max-width: 500px;
-        margin: 30px auto;
-    }
-    v-form-title {
-        font-size: 2rem;
-        font-weight: bold;
-        margin-bottom: 1rem;
-    }
-    .error {
-    color: red;
-    margin-top: 1rem;
-  }
 </style>

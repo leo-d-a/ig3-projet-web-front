@@ -6,7 +6,7 @@
         <span class="self-center text-2xl font-semibold whitespace-nowrap">Liu Gan</span>
       </router-link>
       <div class="flex space-x-5 md:order-2">
-        <router-link to="/startup" class="text-text bg-primary hover:bg-accent focus:ring-4 focus:outline-none  font-medium rounded-lg text-sm px-4 py-2 text-center mr-3 md:mr-0">S'inscrire</router-link>
+        <router-link to="/signup" class="text-text bg-primary hover:bg-accent focus:ring-4 focus:outline-none  font-medium rounded-lg text-sm px-4 py-2 text-center mr-3 md:mr-0">S'inscrire</router-link>
         <router-link to="/login" class="text-text bg-primary hover:bg-accent focus:ring-4 focus:outline-none  font-medium rounded-lg text-sm px-4 py-2 text-center mr-3 md:mr-0">Se connecter</router-link>
         <button data-collapse-toggle="navbar-sticky" type="button" class="inline-flex items-center p-2 text-sm text-text rounded-lg md:hidden hover:bg-primary focus:outline-none focus:ring-2 focus:ring-primary">
           <span class="sr-only">Open main menu</span>

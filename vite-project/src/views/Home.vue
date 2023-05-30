@@ -1,26 +1,31 @@
 <template>
-  <div class="home">
-    <section class="banner">
-      <!-- Ici, ajoutez votre image de bannière et une introduction brève -->
-    </section>
-
-    <section class="services">
-      <!-- Ici, ajoutez une liste de vos services -->
-    </section>
-
-    <section class="training">
-      <!-- Ici, ajoutez une liste de vos formations -->
-    </section>
-
-    <section class="testimonials">
-      <!-- Ici, ajoutez des témoignages de clients -->
-    </section>
+  <div>
+    <HeroSection />
+    <AboutSection />
+    <TrainingSection />
+    <ContactSection />
   </div>
 </template>
 
 <script>
+import HeroSection from '../components/Sections/HeroSection.vue';
+import AboutSection from '../components/Sections/AboutSection.vue';
+import TrainingSection from '../components/Sections/TrainingSection.vue';
+import ContactSection from '../components/Sections/ContactSection.vue';
+import Footer from '../components/Footer.vue';
+import Navbar from '../components/Navbar.vue';
+
+
 export default {
   name: "Home",
+  components: {
+    Navbar,
+    HeroSection,
+    AboutSection,
+    TrainingSection,
+    ContactSection,
+    Footer,
+  },
 };
 </script>
 

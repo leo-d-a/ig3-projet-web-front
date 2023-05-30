@@ -1,92 +1,69 @@
-<script>
-import axios from "axios";
+<template>
+  <div class="w-full max-w-lg mx-auto mt-24">
+    <form @submit.prevent="login" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+      <h1 class="block text-gray-700 text-lg font-bold mb-4 mt-6">Se connecter</h1>
+      <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2" for="email">
+          Email
+        </label>
+        <input v-model="email" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="email" type="email" required>
+      </div>
+      <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2" for="password">
+          Mot de Passe
+        </label>
+        <input v-model="password" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="password" type="password" required>
+      </div>
+      <div class="mb-6">
+        <button @click="forgotPassword" class="text-accent hover:text-secondary text-sm font-bold mb-2">
+          J'ai oublié mon mot de passe
+        </button>
+      </div>
+      <div class="flex items-center justify-between">
+        <button class="bg-accent hover:bg-secondary text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
+          Se Connecter
+        </button>
+        <p v-if="requestError" class="text-red-500 text-xs italic">{{requestError}}</p>
+        <button @click="goToSignup" class="text-accent hover:text-secondary text-sm font-bold mb-2">
+          S'inscrire
+        </button>
+      </div>
+    </form>
+  </div>
+</template>
 
+<script>
 export default {
-  name: "Login",
   data() {
     return {
-        requestError: "",
-        email: "",
-        password: "",
-        emailRules: [
-            (v) => !!v || "Email is required",
-            (v) => /.+@.+\..+/.test(v) || "Email must be valid",
-        ],
-        passwordRules: [
-            (v) => !!v || "Password is required",
-            (v) => v.length >= 2 || "Password must be at least 2 characters",
-        ],
-    };
+      email: '',
+      password: '',
+      requestError: ''
+    }
   },
   methods: {
     async login() {
-        const { valid } = await this.$refs.form.validate();
-        if (!valid) {
-            return;
-        }
-        try {
-            const response = await axios.post("http://localhost:3002/auth/login", {
-	            "mail_address": this.email,
-	            "password": this.password
+      try {
+        const response = await axios.post('/api/login', {
+          email: this.email,
+          password: this.password
         });
-            console.log(response);
-            localStorage.setItem("token", response.data.token)
-            localStorage.setItem("user_mail_address", response.data.user_mail_address)
-            localStorage.setItem("user_admin_level", response.data.user_admin_level)
-            this.$store.commit("setToken", response.data.token)
-            this.$store.commit("setUserAdminLevel", response.data.user_admin_level)
-            this.$store.commit("setUserMailAddress", response.data.user_mail_address)
-            this.$router.push("/");
-        } catch (error) {
-            console.log(error);
-            this.requestError = error.response.data.message;
+
+        if (response.data.success) {
+          // handle success
+        } else {
+          this.requestError = 'Une erreur est survenue lors de la connexion.';
         }
+      } catch (error) {
+        this.requestError = 'Une erreur est survenue lors de la connexion.';
+      }
     },
-  },
-};
+    forgotPassword() {
+      // handle forgot password
+    },
+    goToSignup() {
+      this.$router.push('/signup');
+    }
+  }
+}
 </script>
-
-<template>
-  <v-form class="form" ref="form">
-    <h1>Login</h1>
-    <v-text-field
-        v-model="email"
-        label="Email"
-        type="email"
-        required
-        :rules="emailRules"
-    ></v-text-field>
-    <v-text-field
-        v-model="password"
-        label="Password"
-        type="password"
-        required
-        :rules="passwordRules"
-    ></v-text-field>
-    <div class="d-flex">
-        <v-btn color="primary" type="submit" @click.prevent="login">Login</v-btn>
-        <v-spacer />
-        <v-btn color="secondary" to="/signup">I don't have an account</v-btn>
-    </div>
-    <div v-if="requestError" class="error">
-        {{requestError}}
-    </div>
-  </v-form>
-</template>
-
-<style scoped>
-  .form {
-    width: 100%;
-    max-width: 500px;
-    margin: 30px auto;
-  }
-  v-form-title {
-    font-size: 2rem;
-    font-weight: bold;
-    margin-bottom: 1rem;
-  }
-  .error {
-    color: red;
-    margin-top: 1rem;
-  }
-</style>
