@@ -17,7 +17,7 @@
         <input id="coursePrice" v-model="newCourse.prix" type="number" placeholder="Prix" required class="bg-white text-black mb-2">
         <label for="courseSeats" class="text-white">Nombre de places:</label>
         <input id="courseSeats" v-model="newCourse.nbPlaces" type="number" placeholder="Nombre de places disponibles" required class="bg-white text-black mb-2">
-        <input type="submit" value="Créer la formation ! " class="bg-primary text-black mt-4 px-4 py-2 rounded">
+        <button @click="redirectTo('https://www.youtube.com/watch?v=z_HWtzUHm6s')" class="bg-primary text-black mt-4 px-4 py-2 rounded">Créer la formation !</button>
       </form>
     </div>
   </div>
@@ -60,6 +60,9 @@ export default {
         console.error(error);
       }
     },
+    goToShrek() {
+      this.$router.push('');
+    }
   },
 };
 </script>
