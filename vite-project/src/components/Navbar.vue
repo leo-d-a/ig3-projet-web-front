@@ -3,7 +3,7 @@
     <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
       <router-link to="/" class="flex items-center">
         <img src="../assets/images/logo.png" class="h-8 mr-3" alt="Liu Gan Logo">
-        <span class="self-center text-2xl font-semibold whitespace-nowrap">Liu Gan</span>
+        <span class="self-center text-2xl font-semibold whitespace-nowrap">Tì Liu Gan</span>
       </router-link>
       <div class="flex space-x-5 md:order-2">
         <router-link to="/signup" class="text-text bg-primary hover:bg-accent focus:ring-4 focus:outline-none  font-medium rounded-lg text-sm px-4 py-2 text-center mr-3 md:mr-0">S'inscrire</router-link>
